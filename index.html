@@ -542,10 +542,10 @@
   // ---------- 玩家 ----------
   function updatePlayer(dt) {
     if (!player || !player.alive) return;
-    const wantUp = keys['ArrowUp'] || keys['w'] || keys['W'];
-    const wantDown = keys['ArrowDown'] || keys['s'] || keys['S'];
-    const wantLeft = keys['ArrowLeft'] || keys['a'] || keys['A'];
-    const wantRight = keys['ArrowRight'] || keys['d'] || keys['D'];
+    const wantUp = keys['ArrowUp'] || keys['KeyW'];
+    const wantDown = keys['ArrowDown'] || keys['KeyS'];
+    const wantLeft = keys['ArrowLeft'] || keys['KeyA'];
+    const wantRight = keys['ArrowRight'] || keys['KeyD'];
 
     if (wantUp) player.dir = UP;
     else if (wantRight) player.dir = RIGHT;
@@ -892,27 +892,29 @@
   // ---------- 输入 ----------
   window.addEventListener('keydown', (e) => {
     const k = e.key;
+    const code = e.code;
     keys[k] = true;
+    keys[code] = true;
 
-    if (k === 'Enter') {
+    if (code === 'Enter') {
       if (state === 'menu') startGame();
       else if (state === 'gameover' || state === 'win') startGame();
       else if (state === 'levelclear') startLevel();
       e.preventDefault();
       return;
     }
-    if (k === 'p' || k === 'P') {
+    if (code === 'KeyP') {
       if (state === 'playing') { state = 'paused'; showOverlay('已暂停', '按 P 继续游戏', ''); }
       else if (state === 'paused') { state = 'playing'; hideOverlay(); }
       e.preventDefault();
       return;
     }
-    if (state === 'playing' && (k === ' ' || k === 'j' || k === 'J')) {
+    if (state === 'playing' && (code === 'Space' || code === 'KeyJ')) {
       tryFirePlayer();
       e.preventDefault();
     }
   });
-  window.addEventListener('keyup', (e) => { keys[e.key] = false; });
+  window.addEventListener('keyup', (e) => { keys[e.key] = false; keys[e.code] = false; });
 
   // 防止方向键滚动页面
   window.addEventListener('keydown', (e) => {
