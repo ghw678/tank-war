@@ -131,6 +131,7 @@
 
     <div class="controls">
       <b>移动</b>：方向键 / WASD &nbsp;&nbsp; <b>射击</b>：空格 / J &nbsp;&nbsp; <b>暂停</b>：P
+      <br>版本 v1.4（WASD 修复版）
     </div>
   </div>
 
@@ -219,6 +220,12 @@
   const ovTitle = document.getElementById('ov-title');
   const ovText = document.getElementById('ov-text');
   const ovHint = document.getElementById('ov-hint');
+
+  // 临时调试：显示最后按下的键（排查 WASD 用，之后删除）
+  const keyDebug = document.createElement('div');
+  keyDebug.style.cssText = 'position:fixed;bottom:6px;right:6px;font:11px/1.4 monospace;color:#9aa;background:rgba(0,0,0,0.55);padding:3px 7px;border-radius:4px;pointer-events:none;z-index:99;';
+  keyDebug.textContent = '等待按键…';
+  document.body.appendChild(keyDebug);
 
   // ---------- 游戏状态 ----------
   let state = 'menu';           // menu | playing | paused | levelclear | gameover | win
@@ -891,6 +898,7 @@
 
   // ---------- 输入 ----------
   window.addEventListener('keydown', (e) => {
+    keyDebug.textContent = 'key=' + e.key + ' code=' + e.code + ' composing=' + e.isComposing;
     const k = e.key;
     const code = e.code;
     keys[k] = true;
