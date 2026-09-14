@@ -59,11 +59,12 @@
   .stage {
     position: relative;
     width: 416px;
-    height: 416px;
     max-width: 92vw;
     aspect-ratio: 1 / 1;
   }
   canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
@@ -919,6 +920,7 @@
   });
 
   // ---------- 启动 ----------
+  loadLevel(0); // 预加载第一关地图，菜单后方即显示战场
   showOverlay('坦 克 大 战', '消灭所有敌方坦克，守护你的基地！', '按 Enter 开始游戏');
   updateHUD();
   requestAnimationFrame(loop);
